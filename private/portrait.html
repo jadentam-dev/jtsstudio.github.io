@@ -77,28 +77,27 @@
 </header>
 
 <section id="about-me">
-    <h2>Enter code: </h2>
     <button onclick="prmt()">Enter Code</button>
-    
-    <script>
-        function prmt() {
-            let code = prompt("Enter code: ", "");
-            checkCode(code); // Pass the entered code to checkCode
-        }
-    
-        function checkCode(enteredCode) {
-            const expectedCode = localStorage.getItem('uniqueCode');
-    
-            if (enteredCode === expectedCode) {
-                // Clear the code from localStorage after successful use
-                localStorage.removeItem('uniqueCode');
-            } else {
-                alert('Invalid code. Redirecting back to login page.');
-                window.location.href = 'https://jtsstudio.github.io'; // Redirect back to index.html
-            }
-        }
-    </script>
 </section>
+<script>
+    function prmt() {
+        let code = prompt("Enter code: ", "");
+        checkCode(code); // Pass the entered code to checkCode
+    }
+    
+    function checkCode(enteredCode) {
+        const expectedCode = localStorage.getItem('uniqueCode');
+    
+        if (enteredCode === expectedCode) {
+            // Clear the code from localStorage after successful use
+            localStorage.removeItem('uniqueCode');
+
+        } else {
+            alert('Invalid code. Redirecting back to login page.');
+            window.location.href = 'https://jtsstudio.github.io'; // Redirect back to index.html
+        }
+    }
+</script>
 
 
 <footer>
