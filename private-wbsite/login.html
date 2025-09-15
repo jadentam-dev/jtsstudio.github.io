@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px; /* Fixed width for better layout */
+        }
+        input {
+            margin: 10px 0;
+            padding: 10px;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box; /* Ensures padding is included in total width */
+        }
+        button {
+            padding: 10px;
+            width: 100%;
+            background-color: #39f;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #007bff; /* Darker shade on hover */
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Login</h2>
+    <input type="text" id="username" placeholder="Username" required>
+    <input type="password" id="password" placeholder="Password" required>
+    <button onclick="login()">Login</button>
+</div>
+
+<script>
+    // Obfuscated values for username and password
+    const VALID_USERNAME_HASH = "24a0e915c9cc7ebf01797ab65ec4417446465c983e79969c2e1331b758677770";
+    const VALID_PASSWORD_HASH = "b451923b2ea119d5a0931be1b58b50c187f22146d8c6905f700b956cc9f5c64a";
+
+    function login() {
+        const username = document.getElementById('username').value.trim();
+        const password = document.getElementById('password').value.trim();
+
+        if (!username || !password) {
+            alert('Please enter both username and password.');
+            return;
+        }
+
+        // Hash the entered username and password
+        const hashedUsername = sha256(username);
+        const hashedPassword = sha256(password);
+
+        // Validate the hashed username and password against the predefined values
+        if (hashedUsername === VALID_USERNAME_HASH && hashedPassword === VALID_PASSWORD_HASH) {
+            const uniqueCode = generateUniqueCode();
+            localStorage.setItem('uniqueCode', uniqueCode);
+            alert('Login successful! Your unique code is: ' + uniqueCode);
+            window.location.href = 'portrait.html'; // Redirect to portrait.html
+        } else {
+            alert('Invalid username or password. Please try again.');
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+        }
+    }
+
+    function generateUniqueCode() {
+        return Math.floor(1000 + Math.random() * 9000).toString(); // Generates a 4-digit code
+    }
+</script>
+
+</body>
+</html>
